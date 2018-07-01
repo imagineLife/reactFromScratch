@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Part 1, Basic React</title>
+	<script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+	<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+</head>
+<body>
+	<div id="app"></div>
+
+	<script>
+
+		const vars = {
+			name: 'Jake',
+			dob: '10.86',
+			beardColor: 'My beard is sorta-Reddish.'
+		}	
+
+		//Capitalize Component Names!!
+		function NameComponent(props){
+			return  React.createElement(
+				'h1', null, props.name
+			)
+		}
+
+		function DOBComponent(props){
+			return  React.createElement(
+				'h3', null, props.dob
+			)
+		}
+
+		function BeardComponent(props){
+			return React.createElement(
+				'p', null, props.beardColor
+			)
+		}
+
+		const wrapperElement = React.createElement(
+			'div', 
+			{id: 'wrapper'}, 
+			
+			/*
+			CANNOT pass components to this createElement wrapper fn
+			this createElement MUST use elements
+			*/
+			// NameComponent,
+			// DOBComponent,
+			// BeardComponent
+			React.createElement(NameComponent, { name: 'Jake' }),
+			React.createElement(DOBComponent, {dob: '10.30.1986'}),
+			React.createElement(BeardComponent, {beardColor: 'Kinda-reddish'})
+		)		
+
+		ReactDOM.render(
+			wrapperElement, document.getElementById('app')
+		)
+	</script>
+</body>
+</html>
+
+<!-- 
+Picked up from #3
+1.
+A component is a fn or class which optionally accepts input and returns a react element
+
+can EASILY convert elements to components
+	EXAMPLE
+	
+	const nameElement = React.createElement(
+			'h1', null, vars.name
+
+		)
+	
+	...becomes...
+
+	function NameComponent(){
+		return  React.createElement(
+			'h1', null, vars.name
+		)
+	}
+
+	..and because this can accepts input becomes...
+
+
+	function NameComponent(props){
+		return  React.createElement(
+			'h1', null, props.vars.name
+		)
+	}
+
+Do this with all elements (see above)
+
+
+1:03
+or -46:something
+
+
+
+ -->
