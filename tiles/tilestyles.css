@@ -1,0 +1,29 @@
+*{
+  box-sizing: border-box;
+}
+
+body{
+  padding: 0;
+  margin: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+.tileWrapper{
+  top: 0;
+  bottom: 0;
+  border: 1px solid green;
+  height: 100vh;
+  width: 100vw;
+  display: grid;
+  grid-template-columns: 33.3% 33.3% 33.3%;
+  grid-template-rows: 33.3% 33.3% 33.3%;
+  min-width: 650px;
+}
+
+.singleTile{
+  border: 1px solid blue;
+  margin: 5px;
+  min-width: 200px;
+  display: inline-block;
+}
