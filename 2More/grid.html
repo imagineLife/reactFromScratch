@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Part 1, Basic React</title>
+	<script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+	<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+	<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+<body>
+	<div id="app"></div>
+
+	<script type="text/babel">
+		
+		function Tile(props){
+			return(
+				<div className="singleTile">
+					<h1>{props.tileTitle}</h1>
+					<p>{props.tileBody}</p>	
+				</div>
+			)
+		}
+
+		class App extends React.Component{
+			constructor(props){
+				super(props)
+			
+				this.state = {
+					tiles: [
+						{
+							title: 'Tile Title 1',
+							body: '3.88',
+						},
+						{
+							title: 'Tile Title 2',
+							body: '148 Trucks',
+						},
+						{
+							title: 'Tile Title 3',
+							body: 'Abcd EfghIjk lmnopqr',
+						},
+						{
+							title: 'Tile Title 4',
+							body: '123,456',
+						},
+						{
+							title: 'Tile Title 5',
+							body: 'Line Chart',
+						},
+						{
+							title: 'Tile Title 6',
+							body: 'Bar Chart',
+						},
+						{
+							title: 'Tile Title 7',
+							body: 'More content',
+						},
+						{
+							title: 'Tile Title 8',
+							body: 'More content',
+						},
+						{
+							title: 'Tile Title 9',
+							body: 'More content',
+						},
+					] 
+				}
+			}
+
+			render(){
+
+				const tiles = this.state.tiles.map((tile, ind) => {
+					return <Tile key={tile.title} tileTitle={tile.title} tileBody={tile.body}/>
+				})
+
+				return(
+					<div>
+						{tiles}
+					</div>
+				)
+			}
+		}
+
+		ReactDOM.render( <App />, document.getElementById('app'))
+
+	</script>
+</body>
+</html>
