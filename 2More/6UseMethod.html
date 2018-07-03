@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Part 1, Basic React</title>
+	<script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+	<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+	<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+<body>
+	<div id="app"></div>
+
+	<script type="text/babel">
+		
+		function FriendsList(props){
+			return(
+				<ul>
+					{props.friendsList.map((friendName) => (
+						<li key={friendName}>
+							<span>{friendName}</span>
+							<button onClick={() => props.onRemovePerson(friendName)}>Remove</button>
+						</li>	
+					))}
+				</ul>
+			)
+		}
+
+		class App extends React.Component{
+			constructor(props){
+				super(props)
+			
+				this.state = {
+					people: ['curly', 'larry','moe'] 
+				}
+
+				this.handleRemovePerson = this.handleRemovePerson.bind(this)
+
+			}
+
+
+			handleAddPerson(){
+
+			}
+
+			handleRemovePerson(removingPerson){
+				this.setState((curState) => {
+					return {
+						friends: curState.people.filter((curPerson) => curPerson !== removingPerson)
+					}
+				})
+			}
+
+			render(){
+
+				return(
+					<div>
+						<FriendsList 
+							friendsList={this.state.people}
+							onRemovePerson={this.handleRemovePerson}
+						 />
+					</div>
+				)
+			}
+		}
+
+		ReactDOM.render( <App />, document.getElementById('app'))
+
+	</script>
+</body>
+</html>
+
+<!--
+GOAL of this: USE the handleRemovePerson method in the front-end
+	of the app
+
+GOAL BREAKDOWN: 
+	1. pass the method 
+		from parent App
+		to child FriendsList
+
+		<FriendsList 
+			friendsList={this.state.people}
+			onRemovePerson={this.handleRemovePerson}
+		 />
+
+	2. Hookup an eventHandler to the FriendsList
+		2a. add button
+			NOTE: added friendName inside a SPAN
+		
+		2b. hookup event handler
+			<button onClick={props.onRemovePerson()}>Remove</button>
+			THIS will INVOKE the fn onLoad. This cant be the end result...
+		
+		2c. PASS this method the current person & STOP auto-invoking
+			<button onClick={() => props.onRemovePerson()}>Remove</button>
+			THIS will have an error. Needs updating...
+		
+		2d. add .bind (read below for details)
+			***IN the constructor***
+
+			this.handleRemovePerson = this.handleRemovePerson.bind(this)
+			
+			REVIEW the 'this' keyword in JavaScript
+			this. is connected to the event CALLER, where it is being invoked.
+				here, the this keyword in 'handleRemovePerson' is being invoked in the context of props.
+					SO its like calling props.setState
+					PROBLEM is that we won't use props.setState
+					GOAL is to use 'this' to reference the class App
+					HOW? use .bind
+
+			THERE IS A NEW METHOD, perhaps
+
+
+
+
+-->

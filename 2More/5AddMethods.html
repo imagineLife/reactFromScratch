@@ -30,6 +30,19 @@
 				}
 			}
 
+
+			handleAddPerson(){
+
+			}
+
+			handleRemovePerson(removingPerson){
+				this.setState((curState) => {
+					return {
+						friends: curState.people.filter((curPerson) => curPerson !== removingPerson)
+					}
+				})
+			}
+
 			render(){
 
 				return(
@@ -60,6 +73,20 @@ GOAL BREAKDOWN:
 		FROM the app to (see #3) TO the state of the App class
 		THIS gets state living OUTSIDE the render method. Separation of processes
 
-	3. 
+	3. Create placeholder Methods
+		handelAddPerson
+		handleRemovePerson
+
+	4. use setState inside those placeholder methods
+		4a. removePerson
+			return an object that will be merged with the current state
+			NOTICE: this will NOT edit the intire state, 
+				ONLY changes the part of the state that is written about, here the 'people' array
+			WHY NOT just re-declare the state?
+				like this.state.people = this.state.people
+				WELL, react doesn't like mutating the state data.
+				React isn't listening for state changes,
+				React is comparing a new state with an old state
+			4a.1. USE this function 
 
 -->
