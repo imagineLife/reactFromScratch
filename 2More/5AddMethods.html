@@ -38,7 +38,7 @@
 			handleRemovePerson(removingPerson){
 				this.setState((curState) => {
 					return {
-						friends: curState.people.filter((curPerson) => curPerson !== removingPerson)
+						people: curState.people.filter((curPerson) => curPerson !== removingPerson)
 					}
 				})
 			}
