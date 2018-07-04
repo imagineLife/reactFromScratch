@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Part 1, Basic React</title>
+	<script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+	<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+	<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+<body>
+	<div id="app"></div>
+
+	<script type="text/babel">
+		
+		function FriendsList(props){
+			return(
+				<ul>
+					{props.friendsList.map((friendName) => (
+						<li key={friendName}>
+							<span>{friendName}</span>
+							<button onClick={() => props.onRemovePerson(friendName)}>Remove</button>
+						</li>	
+					))}
+				</ul>
+			)
+		}
+
+		class App extends React.Component{
+			constructor(props){
+				super(props)
+			
+				this.state = {
+					people: ['curly', 'larry','moe'],
+					inputval: '',
+				}
+
+				this.handleRemovePerson = this.handleRemovePerson.bind(this)
+				this.updateInputval = this.updateInputval.bind(this)
+				this.handleAddPerson = this.handleAddPerson.bind(this)
+
+			}
+
+
+			handleAddPerson(){
+				this.setState((prevState) => {
+					console.log(prevState);
+					return{
+						people: prevState.people.concat([this.state.inputval])
+					}
+				})
+				console.log(this.state)
+			}
+
+			handleRemovePerson(removingPerson){
+				this.setState((currentState) => {
+					return {
+						people: currentState.people.filter((curPerson) => curPerson !== removingPerson)
+					}
+				})
+			}
+
+			updateInputval(e){
+				let thisval = e.target.value;
+
+				this.setState(() => ({
+					inputval: thisval
+				}))
+			}
+
+			render(){
+
+				return(
+					<div> 
+						<input
+							type='text'
+							placeholder='new person'
+							value={this.state.inputval}
+							onChange={this.updateInputval}
+						/>
+						<button onClick={this.handleAddPerson}>Add Person</button>
+						<FriendsList 
+							friendsList={this.state.people}
+							onRemovePerson={this.handleRemovePerson}
+						/>
+					</div>
+				)
+			}
+		}
+
+		ReactDOM.render( <App />, document.getElementById('app'))
+
+	</script>
+</body>
+</html>
+
+<!--
+GOAL of this: Make & use ADD friends functionality
+
+GOAL BREAKDOWN:
+	1. Add an input to the render method, with type text and placeholder
+	2. Add a button, 'submit' as button text
+		NOTES: when adding content to the input, we are sorta adding
+			'state' to the app. This should update the state of the component
+	3. Add input content to state of App
+	4. add value prop of input TO input element
+		where input = state.inputContent
+		THIS IS A CONTROLLED componen
+			CONTROLLED by react
+	5. add a onChange item to the input field 
+		5a. add an updateInputContent method
+			set this updateInputContent to set the states recorded inputVal
+
+	NOTE on updating state:
+		2 ways: 
+			1. caring about previous state (like adding / deleting from state list)
+			2. NOT caring about previous state (update state's input value)
+
+	6. bind updateInputContent
+
+
+-->
