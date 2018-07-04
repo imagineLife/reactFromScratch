@@ -30,11 +30,11 @@
 			
 				this.state = {
 					people: ['curly', 'larry','moe'],
-					inputContent: 'testMic'
+					inputval: '',
 				}
 
 				this.handleRemovePerson = this.handleRemovePerson.bind(this)
-				this.updateInputContent = this.updateInputContent.bind(this)
+				this.updateInputval = this.updateInputval.bind(this)
 
 			}
 
@@ -44,23 +44,19 @@
 			}
 
 			handleRemovePerson(removingPerson){
-				console.log('handleRemovePerson')
-				console.log(`removing ${removingPerson}`)
 				this.setState((currentState) => {
 					return {
 						people: currentState.people.filter((curPerson) => curPerson !== removingPerson)
 					}
 				})
-
-				console.log(this.state)
 			}
 
-			updateInputContent(e){
-				const thisVal = e.target.value;
+			updateInputval(e){
+				let thisval = e.target.value;
 
-				this.setState(() => {
-					inputContent: thisVal
-				})
+				this.setState(() => ({
+					inputval: thisval
+				}))
 
 				console.log(this.state)
 			}
@@ -70,10 +66,10 @@
 				return(
 					<div> 
 						<input
-							type="text"
-							placeholder="new person"
-							value={this.state.inputContent}
-							onChange={this.updateInputContent}
+							type='text'
+							placeholder='new person'
+							value={this.state.inputval}
+							onChange={this.updateInputval}
 						/>
 						<button>Add Person</button>
 						<FriendsList 
