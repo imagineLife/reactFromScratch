@@ -29,10 +29,12 @@
 				super(props)
 			
 				this.state = {
-					people: ['curly', 'larry','moe'] 
+					people: ['curly', 'larry','moe'],
+					inputContent: 'testMic'
 				}
 
 				this.handleRemovePerson = this.handleRemovePerson.bind(this)
+				this.updateInputContent = this.updateInputContent.bind(this)
 
 			}
 
@@ -42,11 +44,25 @@
 			}
 
 			handleRemovePerson(removingPerson){
-				this.setState((curState) => {
+				console.log('handleRemovePerson')
+				console.log(`removing ${removingPerson}`)
+				this.setState((currentState) => {
 					return {
-						friends: curState.people.filter((curPerson) => curPerson !== removingPerson)
+						people: currentState.people.filter((curPerson) => curPerson !== removingPerson)
 					}
 				})
+
+				console.log(this.state)
+			}
+
+			updateInputContent(e){
+				const thisVal = e.target.value;
+
+				this.setState(() => {
+					inputContent: thisVal
+				})
+
+				console.log(this.state)
 			}
 
 			render(){
@@ -56,12 +72,14 @@
 						<input
 							type="text"
 							placeholder="new person"
-						>
+							value={this.state.inputContent}
+							onChange={this.updateInputContent}
+						/>
 						<button>Add Person</button>
 						<FriendsList 
 							friendsList={this.state.people}
 							onRemovePerson={this.handleRemovePerson}
-						 />
+						/>
 					</div>
 				)
 			}
@@ -76,9 +94,26 @@
 <!--
 GOAL of this: Make & use ADD friends functionality
 
-GOAL BREAKDOWN: 
+GOAL BREAKDOWN:
 	1. Add an input to the render method, with type text and placeholder
 	2. Add a button, 'submit' as button text
+		NOTES: when adding content to the input, we are sorta adding
+			'state' to the app. This should update the state of the component
+	3. Add input content to state of App
+	4. add value prop of input TO input element
+		where input = state.inputContent
+		THIS IS A CONTROLLED componen
+			CONTROLLED by react
+	5. add a onChange item to the input field 
+		5a. add an updateInputContent method
+			set this updateInputContent to set the states recorded inputVal
+
+	NOTE on updating state:
+		2 ways: 
+			1. caring about previous state (like adding / deleting from state list)
+			2. NOT caring about previous state (update state's input value)
+
+	6. bind updateInputContent
 
 
 -->
