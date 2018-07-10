@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Part 1, Basic React</title>
+	<script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+	<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+	<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+<body>
+	<div id="app"></div>
+
+	<script type="text/babel">
+		
+		function ActivePeople(props){
+			return(
+				<React.Fragment>
+				<h2>Active Peeps</h2>
+				<ul>
+					{props.peepList.map((friendName) => (
+						<li key={friendName.name}>
+							<span>{friendName.name}</span>
+							<button onClick={() => props.onRemovePerson(friendName.name)}>Remove</button>
+						</li>	
+					))}
+				</ul>
+				</React.Fragment>
+			)
+		}
+
+		function InactivePeople(props){
+			return(
+				<React.Fragment>
+				<h2>Inactive Peeps</h2>
+				<ul>
+					{props.peepList.map((friendName) => (
+						<li key={friendName.name}>
+							<span>{friendName.name}</span>
+						</li>	
+					))}
+				</ul>
+				</React.Fragment>
+			)
+		}
+
+		class App extends React.Component{
+			constructor(props){
+				super(props)
+			
+				this.state = {
+					people: [
+						{
+							name: 'curly',
+							active: true
+						},
+						{
+							name: 'larry',
+							active: false
+						},
+						{
+							name: 'moe',
+							acive: true
+						}
+					],
+					inputval: '',
+				}
+
+				this.handleRemovePerson = this.handleRemovePerson.bind(this)
+				this.updateInputval = this.updateInputval.bind(this)
+				this.handleAddPerson = this.handleAddPerson.bind(this)
+				this.removeAllPeople = this.removeAllPeople.bind(this)
+				this.togglePersonActive = this.togglePersonActive.bind(this)
+
+			}
+
+
+			handleAddPerson(){
+				this.setState((prevState) => {
+					return{
+						people: prevState.people.concat([{
+							name: prevState.inputval,
+							active: true
+						}]),
+						inputval: ''
+					}
+				})
+			}
+
+			handleRemovePerson(removingPerson){
+				this.setState((currentState) => {
+					return {
+						people: currentState.people.filter((singlePerson) => singlePerson.name !== removingPerson )
+					}
+				})
+			}
+
+			togglePersonActive(thisPerson){
+				this.setState((curState) => {
+					const person = curState.people.find((person) => person.name === thisPerson)
+				})
+
+				return {
+					people: curState.people.filter((person) => person.name !== thisPerson)
+					.concat([{
+						name,
+						active: !friend.active
+					}])
+				}
+			}
+
+			updateInputval(e){
+				let thisval = e.target.value;
+
+				this.setState(() => ({
+					inputval: thisval
+				}))
+			}
+
+			removeAllPeople(){
+				this.setState(() => ({
+					people: []
+				}))
+			}
+			render(){
+
+				return(
+					<div> 
+						<input
+							type='text'
+							placeholder='new person'
+							value={this.state.inputval}
+							onChange={this.updateInputval}
+						/>
+						<button onClick={this.handleAddPerson}>Add Person</button>
+						<button onClick={this.removeAllPeople}>Remove All People</button>
+						<ActivePeople
+							onRemovePerson={this.handleRemovePerson} 
+							peepList={this.state.people.filter((per) => per.active === true)}
+							onToggleActivity={this.togglePersonActive}
+						/>
+						<InactivePeople 
+							peepList={this.state.people.filter((per) => per.active === false)}
+							onToggleActivity={this.togglePersonActive}
+						/>
+					</div>
+				)
+			}
+		}
+
+		ReactDOM.render( <App />, document.getElementById('app'))
+
+	</script>
+</body>
+</html>
+
+<!--
+GOAL of this: 
+	Be able to remove active people
+GOAL BREAKDOWN:
+	1. Pass the onHandleRemove TO the active people component
+
+
+-->
