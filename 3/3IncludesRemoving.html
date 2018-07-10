@@ -96,15 +96,15 @@
 			togglePersonActive(thisPerson){
 				this.setState((curState) => {
 					const person = curState.people.find((person) => person.name === thisPerson)
-				})
 
-				return {
-					people: curState.people.filter((person) => person.name !== thisPerson)
-					.concat([{
-						name,
-						active: !friend.active
-					}])
-				}
+					return {
+						people: curState.people.filter((person) => person.name !== thisPerson)
+						.concat([{
+							name,
+							active: !friend.active
+						}])
+					}
+				})
 			}
 
 			updateInputval(e){
